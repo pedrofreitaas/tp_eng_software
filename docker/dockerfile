@@ -1,0 +1,24 @@
+FROM python:3.13-alpine AS build
+
+WORKDIR /app
+
+RUN pip install poetry
+
+COPY ./pyproject.toml pyproject.toml
+COPY ./poetry.lock poetry.lock
+
+RUN poetry export --format=requirements.txt > requirements.txt
+
+FROM python:3.13-alpine AS runtime
+
+WORKDIR /app
+
+COPY --from=build /app/requirements.txt requirements.txt
+
+COPY ./src src
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+EXPOSE 8000
+
+CMD ["uvicorn", "src.server:app", "--host", "0.0.0.0", "--port", "8000"]

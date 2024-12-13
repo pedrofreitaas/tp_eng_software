@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "tp-eng-software"
+version = "0.1.0"
+description = ""
+authors = ["Pedro Freitas <freitaas.pedro@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.13"
+fastapi = "^0.115.6"
+uvicorn = "^0.32.1"
+slowapi = "^0.1.9"
+envparse = "^0.2.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
