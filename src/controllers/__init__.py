@@ -1,3 +1,3 @@
 from .task import TaskController
 
-__all__ = ("TaskController") 
+__all__ = ["TaskController"]

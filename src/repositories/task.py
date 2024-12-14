@@ -23,6 +23,6 @@ class TaskRepository(Base):
         task.created_at = date.today()
 
         self.db.add(task)
-        self.db.commit()   
+        self.db.commit()
 
         return self.db.query(TaskRepository).order_by(TaskRepository.id.desc()).first().__dict__
