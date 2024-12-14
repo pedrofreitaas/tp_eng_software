@@ -34,8 +34,8 @@ class Environments:
             return  # Avoid reinitialization
 
         self._initialized = True
-        self.basic_auth_username: str = env("BASIC_AUTH_USERNAME", cast=str)
-        self.basic_auth_password: str = env("BASIC_AUTH_PASSWORD", cast=str)
+
+        self.base_key: str = env("BASE_KEY", cast=str)
 
 # Singleton instance ready for use
 envs = Environments()

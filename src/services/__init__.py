@@ -1,4 +1,4 @@
-from .auth import get_current_credentials
+from .auth import create_access_token, get_current_user
 from .task import TaskService
 
-__all__ = ("get_current_credentials", "TaskService")
+__all__ = ("create_access_token", "get_current_user", "TaskService")

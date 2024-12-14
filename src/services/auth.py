@@ -1,58 +1,70 @@
-import secrets
-from typing import Annotated
+from fastapi import Depends, HTTPException
+from fastapi.security import OAuth2PasswordBearer
 
-from fastapi import Depends, HTTPException, status
-from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from jose import JWTError, jwt
+from datetime import datetime, timedelta, timezone
 
 from src.config import envs
 
-security = HTTPBasic()
 
 
-def get_current_credentials(
-    credentials: Annotated[HTTPBasicCredentials, Depends(security)],
-) -> HTTPBasicCredentials:
+SECRET_KEY = envs.base_key
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 10
+
+OAUTH2_SCHEME = OAuth2PasswordBearer(tokenUrl="token")
+
+def create_access_token(data: dict, expires_delta: timedelta | None = None):
     """
-    Validates the username and password using Basic Authentication.
-
-    This function compares the provided credentials (username and password) with the
-    values stored in the environment configuration. If the credentials are correct,
-    it returns the provided credentials; otherwise, it raises an HTTP 401 Unauthorized error.
+    Create a JSON Web Token (JWT) for the given data with an optional expiration time.
 
     Args:
-        credentials (HTTPBasicCredentials): The credentials provided by the user in the Basic Auth header.
+        data (dict): The data to encode in the JWT.
+        expires_delta (timedelta | None, optional): The time duration after which the token will expire. 
+            If not provided, a default expiration time will be used.
 
     Returns:
-        HTTPBasicCredentials: The credentials provided by the user if authentication is successful.
+        str: The encoded JWT as a string.
+    """
+    to_encode = data.copy()
+    if expires_delta:
+        expire = datetime.now(timezone.utc) + expires_delta
+    else:
+        expire = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    to_encode.update({"exp": expire})
+    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+
+def verify_token(token: str):
+    """
+    Verifies the provided JWT token.
+
+    Args:
+        token (str): The JWT token to be verified.
+
+    Returns:
+        dict: The decoded payload of the token if verification is successful.
 
     Raises:
-        HTTPException: If the provided credentials are incorrect, a 401 Unauthorized exception is raised.
+        HTTPException: If the token is invalid or expired, an HTTP 401 Unauthorized exception is raised.
     """
     try:
-        current_username_bytes = credentials.username.encode("utf8")
-        correct_username_bytes = envs.basic_auth_username.encode("utf8")
-
-        is_correct_username = secrets.compare_digest(
-            current_username_bytes, correct_username_bytes
-        )
-
-        current_password_bytes = credentials.password.encode("utf8")
-        correct_password_bytes = envs.basic_auth_password.encode("utf8")
-
-        is_correct_password = secrets.compare_digest(
-            current_password_bytes, correct_password_bytes
-        )
-
-        if not (is_correct_username and is_correct_password):
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Incorrect username or password",
-                headers={"WWW-Authenticate": "Basic"},
-            )
-
-        return credentials
-    except Exception as e:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        return payload
+    except JWTError as exc:
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="An internal error occurred during authentication.",
-        )
+            status_code=401, 
+            detail="Invalid or expired token"
+        ) from exc
+
+def get_current_user(token: str = Depends(OAUTH2_SCHEME)):
+    """
+    Retrieve the current user based on the provided OAuth2 token.
+
+    Args:
+        token (str): The OAuth2 token used for authentication.
+
+    Returns:
+        dict: The payload containing user information extracted from the token.
+    """
+    payload = verify_token(token)
+    return payload
