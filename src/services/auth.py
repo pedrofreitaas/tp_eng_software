@@ -44,19 +44,14 @@ def get_current_credentials(
         )
 
         if not (is_correct_username and is_correct_password):
-            logger.warning(
-                "Failed authentication attempt for username: %s", credentials.username
-            )
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Incorrect username or password",
                 headers={"WWW-Authenticate": "Basic"},
             )
 
-        logger.info("Successful authentication for username: %s", credentials.username)
         return credentials
     except Exception as e:
-        logger.error("An error occurred during authentication: %s", str(e))
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="An internal error occurred during authentication.",

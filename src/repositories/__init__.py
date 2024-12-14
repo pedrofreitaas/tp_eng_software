@@ -1,3 +1,4 @@
-#from .repository import ClassRepository
+from .task import TaskRepository
+from .person import PersonRepository
 
-#put all the imports here: __all__ = ("")
+__all__ = ("TaskRepository", "PersonRepository")

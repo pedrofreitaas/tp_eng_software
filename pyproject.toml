@@ -6,11 +6,12 @@ authors = ["Pedro Freitas <freitaas.pedro@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "3.13"
+python = ">=3.13, <3.14"
 fastapi = "^0.115.6"
 uvicorn = "^0.32.1"
 slowapi = "^0.1.9"
 envparse = "^0.2.0"
+sqlalchemy = "^2.0.36"
 
 
 [build-system]
