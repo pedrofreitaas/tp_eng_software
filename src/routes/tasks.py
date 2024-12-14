@@ -3,36 +3,25 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.security import HTTPBasicCredentials
 
-# from src.controllers import TasksController
-from src.models import TaskParams
+from src.controllers import TaskController
+from src.models import TaskBody
 from src.services import get_current_credentials
 
 router = APIRouter(tags=["Tasks"])
 
-#tasks_controller = TasksController()
+task_controller = TaskController()
 
-@router.get("/get_task", status_code=201, tags=["get", "NEW"])
-def run_bot(
-    request: Request,
-    task_params: TaskParams,
-    _: Annotated[HTTPBasicCredentials, Depends(get_current_credentials)],
+@router.post("/tasks/create", status_code=200)
+def create_task(
+    body: TaskBody,
+    credentials: HTTPBasicCredentials = Depends(get_current_credentials),
 ):
-    """
-    
-
-    Args:
-        BLABLA
-        _: Dependency to validate current user credentials.
-
-    Returns:
-        Response description.
-    """
     try:
-        return None
+        return task_controller.create(body)
     except HTTPException as e:
         raise e
-    except Exception:
+    except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"An error occurred.",
+            detail=f"Internal server error: {str(e)}",
         )

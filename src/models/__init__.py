@@ -1,6 +1,7 @@
-# from .responses import ()
-from .task import TaskParams
+from .task import TaskBody
+from .person import PersonBody
 
 __all__ = (
-    "TaskParams"
+    "PersonBody",
+    "TaskBody"
 )
