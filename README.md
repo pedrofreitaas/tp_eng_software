@@ -12,6 +12,6 @@
     7. Concluir tarefa (Pedro)
     8. Deletar tarefa (Lucas)
     9. Deletar pessoa (Lucas)
-    10. Relatório de Tarefas (Com filtros) (Pedro)
-    11. Relatório de Pessoas (Com Filtros) (Lucas)
+    10. Consultar todas as tarefas (Pedro)
+    11. Consultar todas as pessoas (Lucas)
 ```
