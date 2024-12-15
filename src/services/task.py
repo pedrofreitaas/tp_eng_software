@@ -9,6 +9,18 @@ class TaskService:
     def create(self, task_data: TaskBody) -> dict:
         return self.__repository.create(task_data)
     
+    def get(self, id: int) -> dict:
+        task = self.__repository.get(id)
+        if not task:
+            raise HTTPException(status_code=404, detail="Tarefa não encontrada.")
+        return task
+    
+    def update(self, id: int, task_data: TaskBody) -> dict:
+        task = self.__repository.get(id)
+        if not task:
+            raise HTTPException(status_code=404, detail="Tarefa não encontrada.")
+        return self.__repository.update(id, task_data)
+
     def delete(self, id: int) -> dict:
         task = self.__repository.get(id)
         if not task:

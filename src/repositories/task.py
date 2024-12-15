@@ -16,11 +16,13 @@ class TaskRepository(Base):
     priority = Column(String, nullable=False)
     deadline = Column(String, nullable=False)
     created_at = Column(String, nullable=False)
+    updated_at = Column(String, nullable=False)
     id_person = Column(Integer, ForeignKey("person.id"), nullable=True)
 
     def create(self, task_data: TaskBody) -> int:
         task = TaskRepository(**task_data.__dict__)
         task.created_at = date.today()
+        task.updated_at = date.today()
 
         self.db.add(task)
         self.db.commit()
@@ -40,3 +42,18 @@ class TaskRepository(Base):
         self.db.delete(task)
         self.db.commit()
         return {"message": "Tarefa deletada com sucesso"}
+
+    def update(self, id: int, task_data: TaskBody) -> dict:
+        task = self.db.query(TaskRepository).filter(TaskRepository.id == id).first()
+
+        if task:
+            task.title = task_data.title
+            task.description = task_data.description
+            task.status = task_data.status
+            task.priority = task_data.priority
+            task.deadline = task_data.deadline
+            task.updated_at = date.today()
+            self.db.commit()
+            return {"message": "Tarefa atualizada com sucesso"}
+
+        return None

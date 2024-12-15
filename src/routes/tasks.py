@@ -38,3 +38,20 @@ def delete_task(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Internal server error: {str(e)}",
         ) from e
+    
+
+@router.post("/task/update/{task_id}", status_code=200)
+def delete_task(
+    task_id: int,
+    body: TaskBody,
+    credentials: OAuth2AuthorizationCodeBearer = Depends(get_current_user),
+):
+    try:
+        return task_controller.update(task_id, body)
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Internal server error: {str(e)}",
+        ) from e
