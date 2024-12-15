@@ -13,8 +13,7 @@ class PersonService:
         person = self.__repository.get(person_data)
         if not person:
             raise HTTPException(status_code=404, detail="Pessoa não encontrada.")
-        
-        return person.__dict__
+        return person
     
     def delete(self, id: int) -> dict:
         person = self.__repository.get(id)
