@@ -9,8 +9,17 @@ class PersonService:
     def create(self, person_data: PersonBody) -> dict:
         return self.__repository.create(person_data)
     
+    def get(self, person_data: PersonBody) -> dict:
+        return self.__repository.get(person_data)
+    
     def delete(self, id: int) -> dict:
         person = self.__repository.get(id)
         if not person:
             raise HTTPException(status_code=404, detail="Pessoa não encontrada.")
         return self.__repository.delete(id)
+    
+    def update(self, id: int, person_data: PersonBody) -> dict:
+        person = self.__repository.get(id)
+        if not person:
+            raise HTTPException(status_code=404, detail="Pessoa não encontrada.")
+        return self.__repository.update(id, person_data)
