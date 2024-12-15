@@ -6,6 +6,7 @@ services:
     container_name: api
     volumes:
       - ./src:/app/src
+      - ./tests:/app/tests
       - /var/run/docker.sock:/var/run/docker.sock
       - ./logs:/app/logs
     env_file:
