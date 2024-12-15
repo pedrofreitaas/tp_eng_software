@@ -23,4 +23,15 @@ class PersonRepository(Base):
         
         return self.db.query(PersonRepository).order_by(PersonRepository.id.desc()).first().__dict__
 
+    def get(self, id: int)-> dict:
+        result = self.db.query(PersonRepository).filter(PersonRepository.id == id).first()
+        if result:
+            return result.__dict__
+        return None
+    
+    def delete(self, id: int)-> None:
+        person = self.db.query(PersonRepository).filter(PersonRepository.id == id).first()
+        self.db.delete(person)
+        self.db.commit()
+        return {"message": "Pessoa deletada com sucesso"}
         

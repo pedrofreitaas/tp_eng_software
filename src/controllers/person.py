@@ -6,3 +6,6 @@ class PersonController:
 
     def create(self, person_data: PersonBody) -> dict:
         return self.person_service.create(person_data)
+
+    def delete(self, id: int) -> dict:
+        return self.person_service.delete(id)
