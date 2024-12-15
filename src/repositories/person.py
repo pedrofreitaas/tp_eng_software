@@ -1,15 +1,17 @@
-from src.database import SessionLocal
-from src.models import PersonBody
-from src.database.database import Base
 from sqlalchemy import Column, Integer, String
 from datetime import date
+
+from src.database import SessionLocal
+from src.models import PersonBody
+from src.database.database import Base, engine
+
 class PersonRepository(Base):
     __tablename__ = "person"
     db = SessionLocal()
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     name = Column(String, nullable=False)
-    email = Column(String, nullable=False)   
+    email = Column(String, nullable=False)
     phone = Column(String, nullable=False)
     created_at = Column(String, nullable=False)
 
@@ -28,10 +30,9 @@ class PersonRepository(Base):
         if result:
             return result.__dict__
         return None
-    
+
     def delete(self, id: int)-> None:
         person = self.db.query(PersonRepository).filter(PersonRepository.id == id).first()
         self.db.delete(person)
         self.db.commit()
         return {"message": "Pessoa deletada com sucesso"}
-        

@@ -4,6 +4,8 @@ from src.models import TaskBody
 from datetime import date
 from src.database import Base, engine
 
+Base.metadata.create_all(bind=engine)
+
 class TestCreateTask(unittest.TestCase):
 
     def test_create_task_with_valid_data(self):

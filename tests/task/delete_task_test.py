@@ -5,6 +5,7 @@ from src.database import Base, engine
 from datetime import date
 from fastapi import HTTPException
 
+Base.metadata.create_all(bind=engine)
 
 class TestDeleteTask(unittest.TestCase):
     def test_delete_task_with_valid_id(self):

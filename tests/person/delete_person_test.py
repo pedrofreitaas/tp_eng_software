@@ -4,6 +4,8 @@ from src.models import PersonBody
 from src.database import Base, engine
 from fastapi import HTTPException
 
+Base.metadata.create_all(bind=engine)
+
 class TestDeletePerson(unittest.TestCase):
     def test_delete_person_with_valid_id(self):
         person_data = PersonBody(

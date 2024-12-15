@@ -1,5 +1,6 @@
 from src.services import PersonService
 from src.models import PersonBody
+
 class PersonController:
     def __init__(self):
         self.person_service = PersonService()

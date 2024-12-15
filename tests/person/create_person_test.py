@@ -3,11 +3,13 @@ from src.controllers import PersonController
 from src.models import PersonBody
 from src.database import Base, engine
 
+Base.metadata.create_all(bind=engine)
 
 class TestCreatePerson(unittest.TestCase):
     def test_create_person_with_valid_data(self):
         person_data = PersonBody(
-            name="New Person", email="teste@teste.com", phone="12345678901")
+            name="New Person", email="teste@teste.com", phone="12345678901"
+        )
 
         result = PersonController().create(person_data)
         self.assertEqual(result['name'], "New Person")
@@ -27,7 +29,8 @@ class TestCreatePerson(unittest.TestCase):
     def test_create_task_with_email_error(self):
         try:
             person_data = PersonBody(
-                name="New Person", email="teste.com", phone="12345678901")
+                name="New Person", email="teste.com", phone="12345678901"
+            )
         except ValueError as e:
             error = str(e).split("\n")
             self.assertEqual(error[0], "1 validation error for PersonBody")
