@@ -4,8 +4,8 @@
 
 ```bash
     1. Add JWT Auth (Pedro) - done.
-    2. Criar pessoa (Lucas)
-    3. Criar tarefa (Lucas)
+    2. Criar pessoa (Lucas) - done.
+    3. Criar tarefa (Lucas) - done.
     4. Atualizar Pessoa (Pedro)
     5. Atualizar Tarefa (Pedro)
     6. Vincular Tarefa a Pessoa (Pedro)
