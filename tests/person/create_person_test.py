@@ -1,13 +1,13 @@
 import unittest
 from src.controllers import PersonController
 from src.models import PersonBody
-from datetime import date
 from src.database import Base, engine
 
 
 class TestCreatePerson(unittest.TestCase):
     def test_create_person_with_valid_data(self):
-        person_data = PersonBody(name="New Person", email="teste@teste.com", phone="12345678901")
+        person_data = PersonBody(
+            name="New Person", email="teste@teste.com", phone="12345678901")
 
         result = PersonController().create(person_data)
         self.assertEqual(result['name'], "New Person")

@@ -18,7 +18,7 @@ class TaskRepository(Base):
     created_at = Column(String, nullable=False)
     id_person = Column(Integer, ForeignKey("person.id"), nullable=True)
 
-    def create(self, task_data: TaskBody)-> int:
+    def create(self, task_data: TaskBody) -> int:
         task = TaskRepository(**task_data.__dict__)
         task.created_at = date.today()
 
@@ -26,3 +26,17 @@ class TaskRepository(Base):
         self.db.commit()
 
         return self.db.query(TaskRepository).order_by(TaskRepository.id.desc()).first().__dict__
+
+    def get(self, id: int) -> dict:
+        result = self.db.query(TaskRepository).filter(
+            TaskRepository.id == id).first()
+        if result:
+            return result.__dict__
+        return None
+
+    def delete(self, id: int) -> dict:
+        task = self.db.query(TaskRepository).filter(
+            TaskRepository.id == id).first()
+        self.db.delete(task)
+        self.db.commit()
+        return {"message": "Tarefa deletada com sucesso"}

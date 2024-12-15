@@ -1,21 +1,21 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2AuthorizationCodeBearer
 
-from src.controllers import TaskController
-from src.models import TaskBody
+from src.controllers import PersonController
+from src.models import PersonBody
 from src.services import get_current_user
 
-router = APIRouter(tags=["Tasks"])
+router = APIRouter(tags=["persons"])
 
-task_controller = TaskController()
+person_controller = PersonController()
 
-@router.post("/task/create", status_code=200)
-def create_task(
-    body: TaskBody,
+@router.post("/person/create", status_code=200)
+def create_person(
+    body: PersonBody,
     credentials: OAuth2AuthorizationCodeBearer = Depends(get_current_user),
 ):
     try:
-        return task_controller.create(body)
+        return person_controller.create(body)
     except HTTPException as e:
         raise e
     except Exception as e:
@@ -24,13 +24,13 @@ def create_task(
             detail=f"Internal server error: {str(e)}",
         ) from e
 
-@router.delete("/task/delete/{task_id}", status_code=200)
-def delete_task(
-    task_id: int,
+@router.delete("/person/delete/{person_id}", status_code=200)
+def delete_person(
+    person_id: int,
     credentials: OAuth2AuthorizationCodeBearer = Depends(get_current_user),
 ):
     try:
-        return task_controller.delete(task_id)
+        return person_controller.delete(person_id)
     except HTTPException as e:
         raise e
     except Exception as e:
