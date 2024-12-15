@@ -35,6 +35,9 @@ class TaskRepository(Base):
         if result:
             return result.__dict__
         return None
+    
+    def get_all(self) -> list:
+        return [task.__dict__ for task in self.db.query(TaskRepository).all()]
 
     def delete(self, id: int) -> dict:
         task = self.db.query(TaskRepository).filter(
@@ -57,3 +60,15 @@ class TaskRepository(Base):
             return {"message": "Tarefa atualizada com sucesso"}
 
         return None
+    
+    def vinculate(self, id: int, person_id: int) -> dict:
+        task = self.db.query(TaskRepository).filter(TaskRepository.id == id).first()
+        task.id_person = person_id
+        self.db.commit()
+        return {"message": "Tarefa vinculada com sucesso"}
+    
+    def conclude(self, id: int) -> dict:
+        task = self.db.query(TaskRepository).filter(TaskRepository.id == id).first()
+        task.status = "done"
+        self.db.commit()
+        return {"message": "Tarefa concluída com sucesso"}

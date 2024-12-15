@@ -22,5 +22,5 @@ class TestDeletePerson(unittest.TestCase):
             result = e.detail
             status_code = e.status_code
 
-            self.assertEqual(result, "Pessoa não Encontrada.")
+            self.assertEqual(result, "Pessoa não encontrada.")
             self.assertEqual(status_code, 404)
