@@ -1,5 +1,8 @@
-from .task import *
-from .person import *
+from .unit.task import *
+from .unit.person import *
+from .integration.task import *
+from .integration.person import *
+
 
 __all__ = [
     "TestConcludeTask",
@@ -10,5 +13,7 @@ __all__ = [
     "TestVinculateTask",
     "TestCreatePerson",
     "TestDeletePerson",
-    "TestUpdatePerson"
+    "TestUpdatePerson",
+    "TestCreatePersonIntegration",
+    "TestCreateTaskIntegration"
 ]
