@@ -34,8 +34,12 @@ jobs:
 
       - name: Run Unit Tests
         run: |
-          docker run --rm tp_eng_software-api python -m unittest
-          
+          docker run --rm tp_eng_software-api python -m unittest tests.unit
+
+      - name: Run Integration Tests
+        run: |
+          python -m unittest tests.integration
+
       - name: Shut down Docker Compose services
         run: |
           docker compose -f docker/docker-compose.yml --project-directory . down
