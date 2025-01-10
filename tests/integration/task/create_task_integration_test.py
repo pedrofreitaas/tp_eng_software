@@ -1,9 +1,6 @@
 import unittest
 from datetime import date
-from src.database import Base, engine
 import requests
-
-Base.metadata.create_all(bind=engine)
 
 
 class TestCreateTaskIntegration(unittest.TestCase):

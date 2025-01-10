@@ -1,8 +1,5 @@
 import unittest
-from src.database import Base, engine
 import requests
-
-Base.metadata.create_all(bind=engine)
 
 
 class TestCreatePersonIntegration(unittest.TestCase):
