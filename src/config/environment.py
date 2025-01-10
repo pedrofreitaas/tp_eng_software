@@ -1,4 +1,4 @@
-from envparse import env
+import os
 
 class Environments:
     """
@@ -35,7 +35,7 @@ class Environments:
 
         self._initialized = True
 
-        self.base_key: str = env("BASE_KEY", cast=str)
+        self.base_key: str = os.getenv("BASE_KEY")
 
 # Singleton instance ready for use
 envs = Environments()
