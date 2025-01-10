@@ -26,8 +26,8 @@ WORKDIR /app
 COPY --from=build /usr/local/lib/python3.13/site-packages /usr/local/lib/python3.13/site-packages
 COPY --from=build /usr/local/bin /usr/local/bin
 
-# Copy application code
-COPY ./src src
+# Copy the application code
+COPY . .
 
 # Expose the application port
 EXPOSE 8000
