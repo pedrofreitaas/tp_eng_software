@@ -30,7 +30,7 @@ jobs:
 
       - name: Run Docker Compose
         run: |
-          docker compose -f docker/docker-compose.yml --project-directory . up --build --force-recreate
+          docker compose -f docker/docker-compose.yml --project-directory . up --build --force-recreate -d
 
       - name: Run Tests
         run: |
