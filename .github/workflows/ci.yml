@@ -31,6 +31,10 @@ jobs:
       - name: Run Docker Compose
         run: |
           docker compose -f docker/docker-compose.yml --project-directory . up --build --force-recreate
+
+      - name: Run Tests
+        run: |
+          docker run --rm tp_eng_software-api2 python -m unittest
           
       - name: Shut down Docker Compose services
         run: |
