@@ -34,7 +34,7 @@ jobs:
 
       - name: Run Tests
         run: |
-          docker run --rm tp_eng_software-api2 python -m unittest
+          docker run --rm tp_eng_software-api python -m unittest
           
       - name: Shut down Docker Compose services
         run: |
