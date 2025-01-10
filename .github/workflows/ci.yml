@@ -57,9 +57,6 @@ jobs:
           choco install docker-desktop
           Start-Service docker
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
       - name: Create .env file from GitHub secrets
         run: |
           echo "BASE_KEY=$BASE_KEY" >> .env
@@ -93,9 +90,6 @@ jobs:
           open /Applications/Docker.app
           while ! docker system info > /dev/null 2>&1; do sleep 1; done
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
       - name: Create .env file from GitHub secrets
         run: |
           echo "BASE_KEY=$BASE_KEY" >> .env
@@ -114,4 +108,4 @@ jobs:
 
       - name: Shut down Docker Compose services
         run: |
-          docker compose -f docker/docker-compose.yml --project-directory . dow
+          docker compose -f docker/docker-compose.yml --project-directory . down
