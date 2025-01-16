@@ -1,17 +1,13 @@
 # TP eng software.
 
-## to-do
+## Nomes
+Lucas Silva Viana
+Pedro Henrique Freitas Guedes Oliveira
 
-```bash
-    1. Add JWT Auth (Pedro) - done.
-    2. Criar pessoa (Lucas) - done.
-    3. Criar tarefa (Lucas) - done.
-    4. Atualizar Pessoa (Pedro) - done.
-    5. Atualizar Tarefa (Pedro) - done.
-    6. Vincular Tarefa a Pessoa (Pedro) - done.
-    7. Concluir tarefa (Pedro) - done.
-    8. Deletar tarefa (Lucas) - done.
-    9. Deletar pessoa (Lucas) - done.
-    10. Consultar todas as tarefas (Pedro) = done.
-    11. Consultar todas as pessoas (Lucas) - abandoned.
-```
+## O Sistema
+O sistema desenvolvido é uma API para organização de tarefas, nele é possível cadastrar tarefas e pessoas podendo editar elas para mudar seu status, similar a um trello.
+
+## Tecnologias Utilizadas
+Foi feito o uso do Docker para rodar uma imagem de Python com a Lib FastAPI para colocar o sistema como uma API.
+Para Banco de Dados, fizemos o uso do SQLite, um banco simples e leve que já atende o nosso propósito.
+Para os testes fizemos uso da Lib unittest do Python por ser uma Lib simples e eficiente.
